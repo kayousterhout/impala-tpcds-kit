@@ -10,8 +10,8 @@ do
     -DISTRIBUTIONS ${TPCDS_ROOT}/tools/tpcds.idx \
     -TERMINATE N \
     -FILTER Y \
-    -QUIET Y | hdfs dfs -put - ${FLATFILE_HDFS_ROOT}/${t}/${t}.dat &
+    -QUIET Y | /root/ephemeral-hdfs/bin/hadoop dfs -put - ${FLATFILE_HDFS_ROOT}/${t}/${t}.dat &
 done
 wait
 
-hdfs dfs -ls -R ${FLATFILE_HDFS_ROOT}/*/*.dat
+/root/ephemeral-hdfs/bin/hadoop dfs -ls -R ${FLATFILE_HDFS_ROOT}/*/*.dat
