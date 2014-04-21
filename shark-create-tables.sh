@@ -35,8 +35,70 @@ location '${FLATFILE_HDFS_ROOT}/store_sales'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_customer_demographics;
-create external table et_customer_demographics
+drop table if exists store_sales;
+create table store_sales (
+  ss_sold_time_sk           int,
+  ss_item_sk                int,
+  ss_customer_sk            int,
+  ss_cdemo_sk               int,
+  ss_hdemo_sk               int,
+  ss_addr_sk                int,
+  ss_store_sk               int,
+  ss_promo_sk               int,
+  ss_ticket_number          int,
+  ss_quantity               int,
+  ss_wholesale_cost         double,
+  ss_list_price             double,
+  ss_sales_price            double,
+  ss_ext_discount_amt       double,
+  ss_ext_sales_price        double,
+  ss_ext_wholesale_cost     double,
+  ss_ext_list_price         double,
+  ss_ext_tax                double,
+  ss_coupon_amt             double,
+  ss_net_paid               double,
+  ss_net_paid_inc_tax       double,
+  ss_net_profit             double
+)
+partitioned by (ss_sold_date_sk int)
+stored as textfile
+;
+
+SET hive.exec.dynamic.partition = true;
+SET hive.exec.dynamic.partition.mode = nonstrict;
+SET hive.exec.max.dynamic.partitions = 2000;
+
+insert overwrite table store_sales
+partition(ss_sold_date_sk)
+select
+ss_sold_time_sk,
+ss_item_sk,
+ss_customer_sk,
+ss_cdemo_sk,
+ss_hdemo_sk,
+ss_addr_sk,
+ss_store_sk,
+ss_promo_sk,
+ss_ticket_number,
+ss_quantity,
+ss_wholesale_cost,
+ss_list_price,
+ss_sales_price,
+ss_ext_discount_amt,
+ss_ext_sales_price,
+ss_ext_wholesale_cost,
+ss_ext_list_price,
+ss_ext_tax,
+ss_coupon_amt,
+ss_net_paid,
+ss_net_paid_inc_tax,
+ss_net_profit,
+ss_sold_date_sk
+from et_store_sales
+distribute by ss_sold_date_sk;
+
+drop table if exists customer_demographics;
+create external table customer_demographics
 (
   cd_demo_sk                int,
   cd_gender                 string,
@@ -53,8 +115,8 @@ location '${FLATFILE_HDFS_ROOT}/customer_demographics'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_date_dim;
-create external table et_date_dim
+drop table if exists date_dim;
+create external table date_dim
 (
   d_date_sk                 int,
   d_date_id                 string,
@@ -90,8 +152,8 @@ location '${FLATFILE_HDFS_ROOT}/date_dim'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_time_dim;
-create external table et_time_dim
+drop table if exists time_dim;
+create external table time_dim
 (
   t_time_sk                 int,
   t_time_id                 string,
@@ -109,8 +171,8 @@ location '${FLATFILE_HDFS_ROOT}/time_dim'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_item;
-create external table et_item
+drop table if exists item;
+create external table item
 (
   i_item_sk                 int,
   i_item_id                 string,
@@ -140,8 +202,8 @@ location '${FLATFILE_HDFS_ROOT}/item'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_store;
-create external table et_store
+drop table if exists store;
+create external table store
 (
   s_store_sk                int,
   s_store_id                string,
@@ -178,8 +240,8 @@ location '${FLATFILE_HDFS_ROOT}/store'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_customer;
-create external table et_customer
+drop table if exists customer;
+create external table customer
 (
   c_customer_sk             int,
   c_customer_id             string,
@@ -205,8 +267,8 @@ location '${FLATFILE_HDFS_ROOT}/customer'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_promotion;
-create external table et_promotion
+drop table if exists promotion;
+create external table promotion
 (
   p_promo_sk                int,
   p_promo_id                string,
@@ -233,8 +295,8 @@ location '${FLATFILE_HDFS_ROOT}/promotion'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_household_demographics;
-create external table et_household_demographics
+drop table if exists household_demographics;
+create external table household_demographics
 (
   hd_demo_sk                int,
   hd_income_band_sk         int,
@@ -247,8 +309,8 @@ location '${FLATFILE_HDFS_ROOT}/household_demographics'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_customer_address;
-create external table et_customer_address
+drop table if exists customer_address;
+create external table customer_address
 (
   ca_address_sk             int,
   ca_address_id             string,
@@ -269,8 +331,8 @@ location '${FLATFILE_HDFS_ROOT}/customer_address'
 tblproperties ('serialization.null.format'='')
 ;
 
-drop table if exists et_inventory;
-create external table et_inventory
+drop table if exists inventory;
+create external table inventory
 (
   inv_date_sk               int,
   inv_item_sk               int,
