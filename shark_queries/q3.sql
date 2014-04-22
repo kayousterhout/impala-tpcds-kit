@@ -1,8 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query3.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
--- set shark.exec.mode='shak';
 select
   d_year,
   -- year(ss_date) as d_year,
@@ -17,9 +14,9 @@ select
   item.i_brand brand,
   sum(ss_ext_sales_price) sum_agg
 from
-  store_sales_cached
-  join item on (store_sales_cached.ss_item_sk = item.i_item_sk)
-  join date_dim dt on (dt.d_date_sk = store_sales_cached.ss_sold_date_sk)
+  store_sales
+  join item on (store_sales.ss_item_sk = item.i_item_sk)
+  join date_dim dt on (dt.d_date_sk = store_sales.ss_sold_date_sk)
 where
   item.i_manufact_id = 436
   and dt.d_moy = 12
@@ -43,3 +40,4 @@ order by
   brand_id
 limit 100;
 -- end query 1 in stream 0 using template query3.tpl
+exit;

@@ -1,16 +1,14 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query52.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   d_year,
   i_brand_id,
   i_brand,
   sum(ss_ext_sales_price) ext_price
 from
-  store_sales_cached
-  join item on (store_sales_cached.ss_item_sk = item.i_item_sk)
-  join date_dim dt on (store_sales_cached.ss_sold_date_sk = dt.d_date_sk)
+  store_sales
+  join item on (store_sales.ss_item_sk = item.i_item_sk)
+  join date_dim dt on (store_sales.ss_sold_date_sk = dt.d_date_sk)
 where
   i_manager_id = 1
   and d_moy = 12
@@ -27,3 +25,4 @@ order by
   i_brand_id 
 limit 100;
 -- end query 1 in stream 0 using template query52.tpl
+exit;

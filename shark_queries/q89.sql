@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query89.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   *
 from
@@ -15,10 +13,10 @@ from
     sum(ss_sales_price) sum_sales
     -- avg(sum(ss_sales_price)) over (partition by i_category, i_brand, s_store_name, s_company_name) avg_monthly_sales
   from
-    store_sales_cached
-    join item on (store_sales_cached.ss_item_sk = item.i_item_sk)
-    join store on (store_sales_cached.ss_store_sk = store.s_store_sk)
-    join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+    store_sales
+    join item on (store_sales.ss_item_sk = item.i_item_sk)
+    join store on (store_sales.ss_store_sk = store.s_store_sk)
+    join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
   where
     -- ss_date between '2000-01-01' and '2000-12-31'
     ss_sold_date_sk between 2451545 and 2451910  -- partition key filter
@@ -44,3 +42,4 @@ order by
   s_store_name
 limit 100;
 -- end query 1 in stream 0 using template query89.tpl
+exit;

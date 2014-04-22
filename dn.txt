@@ -1,4 +1,5 @@
-node1.company.com
-node2.company.com
-node3.company.com
-node4.company.com
+ec2-67-202-0-125.compute-1.amazonaws.com
+ec2-67-202-55-120.compute-1.amazonaws.com
+ec2-54-205-101-11.compute-1.amazonaws.com
+ec2-23-22-133-27.compute-1.amazonaws.com
+ec2-54-82-164-18.compute-1.amazonaws.com

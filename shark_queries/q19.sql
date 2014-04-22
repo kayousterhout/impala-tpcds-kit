@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query19.tpl
-set mapred.reduce.tasks=300;
-drop table q19_result;
---create table q19_result as
 select
   i_brand_id,
   i_brand,
@@ -35,3 +33,4 @@ order by
   i_manufact
 limit 100;
 -- end query 1 in stream 0 using template query19.tpl
+exit;

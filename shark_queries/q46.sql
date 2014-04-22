@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query46.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   c_last_name,
   c_first_name,
@@ -18,11 +16,11 @@ from
     sum(ss_coupon_amt) amt,
     sum(ss_net_profit) profit
   from
-    store_sales_cached
-    join store on (store_sales_cached.ss_store_sk = store.s_store_sk)
-    join household_demographics on (store_sales_cached.ss_hdemo_sk = household_demographics.hd_demo_sk)
-    join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
-    join customer_address on (store_sales_cached.ss_addr_sk = customer_address.ca_address_sk)
+    store_sales
+    join store on (store_sales.ss_store_sk = store.s_store_sk)
+    join household_demographics on (store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk)
+    join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
+    join customer_address on (store_sales.ss_addr_sk = customer_address.ca_address_sk)
   where
     store.s_city in ('Midway', 'Concord', 'Spring Hill', 'Brownsville', 'Greenville')
     and (household_demographics.hd_dep_count = 5
@@ -76,3 +74,4 @@ order by
   ss_ticket_number 
 limit 100;
 -- end query 1 in stream 0 using template query46.tpl
+exit;

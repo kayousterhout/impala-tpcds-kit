@@ -1,14 +1,12 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query82.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   i_item_id,
   i_item_desc,
   i_current_price
 from
-  store_sales_cached
-  join item on (store_sales_cached.ss_item_sk = item.i_item_sk)
+  store_sales
+  join item on (store_sales.ss_item_sk = item.i_item_sk)
   join inventory on (item.i_item_sk = inventory.inv_item_sk)
   -- join date_dim on (inventory.inv_date_sk = date_dim.d_date_sk)
 where
@@ -25,3 +23,4 @@ order by
   i_item_id 
 limit 100;
 -- end query 1 in stream 0 using template query82.tpl
+exit;

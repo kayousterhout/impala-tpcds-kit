@@ -6,7 +6,7 @@ export FLATFILE_HDFS_ROOT=/user/${USER}/tpcds
 
 # scale factor in GB
 # SF 3000 yields ~1TB for the store_sales table
-export TPCDS_SCALE_FACTOR=100
+export TPCDS_SCALE_FACTOR=1000
 
 # this is used to determine the number of dsdgen processes to generate data
 # usually set to one per physical CPU core

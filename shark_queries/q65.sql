@@ -1,8 +1,6 @@
+set mapred.reduce.tasks=80;
 --q65
 -- start query 1 in stream 0 using template query65.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   s_store_name,
   i_item_desc,
@@ -16,8 +14,8 @@ from
     ss_item_sk,
     sum(ss_sales_price) as revenue
   from
-    store_sales_cached
-    join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+    store_sales
+    join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
   where
     -- ss_date between '2001-01-01' and '2001-12-31'
     ss_sold_date_sk between 2451911 and 2452275  -- partition key filter
@@ -38,8 +36,8 @@ from
       ss_item_sk,
       sum(ss_sales_price) as revenue
     from
-      store_sales_cached
-      join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+      store_sales
+      join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
     where
       -- ss_date between '2001-01-01' and '2001-12-31'
       ss_sold_date_sk between 2451911 and 2452275  -- partition key filter
@@ -58,3 +56,4 @@ order by
   i_item_desc 
 limit 100;
 -- end query 1 in stream 0 using template query65.tpl
+exit;

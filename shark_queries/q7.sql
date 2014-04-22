@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query7.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   i_item_id,
   avg(ss_quantity) agg1,
@@ -9,11 +7,11 @@ select
   avg(ss_coupon_amt) agg3,
   avg(ss_sales_price) agg4
 from
-  store_sales_cached
-  join customer_demographics on (store_sales_cached.ss_cdemo_sk = customer_demographics.cd_demo_sk)
-  join item on (store_sales_cached.ss_item_sk = item.i_item_sk)
-  join promotion on (store_sales_cached.ss_promo_sk = promotion.p_promo_sk)
-  join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+  store_sales
+  join customer_demographics on (store_sales.ss_cdemo_sk = customer_demographics.cd_demo_sk)
+  join item on (store_sales.ss_item_sk = item.i_item_sk)
+  join promotion on (store_sales.ss_promo_sk = promotion.p_promo_sk)
+  join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
 where
   cd_gender = 'F'
   and cd_marital_status = 'W'
@@ -29,3 +27,4 @@ order by
   i_item_id 
 limit 100;
 -- end query 1 in stream 0 using template query7.tpl
+exit;

@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query73.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   c_last_name,
   c_first_name,
@@ -15,10 +13,10 @@ from
     ss_customer_sk,
     count(*) cnt
   from
-    store_sales_cached
-    join household_demographics on (store_sales_cached.ss_hdemo_sk = household_demographics.hd_demo_sk)
-    join store on (store_sales_cached.ss_store_sk = store.s_store_sk)
-    -- join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+    store_sales
+    join household_demographics on (store_sales.ss_hdemo_sk = household_demographics.hd_demo_sk)
+    join store on (store_sales.ss_store_sk = store.s_store_sk)
+    -- join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
   where
     store.s_county in ('Saginaw County', 'Sumner County', 'Appanoose County', 'Daviess County')
     -- and date_dim.d_dom between 1 and 2
@@ -49,3 +47,4 @@ order by
   cnt desc
 limit 1000;
 -- end query 1 in stream 0 using template query73.tpl
+exit;

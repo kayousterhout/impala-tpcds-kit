@@ -1,5 +1,4 @@
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
+set mapred.reduce.tasks=80;
 set mapred.reduce.tasks=300;
 select 
   count(*) as total,
@@ -14,4 +13,5 @@ select
   max(ss_addr_sk) as max_ss_addr_sk,
   max(ss_store_sk) as max_ss_store_sk,
   max(ss_promo_sk) as max_ss_promo_sk
-from store_sales_cached;
+from store_sales;
+exit;

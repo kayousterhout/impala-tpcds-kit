@@ -1,14 +1,12 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query8.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   s_store_name,
   sum(ss_net_profit)
 from
-  store_sales_cached
-  join store on (store_sales_cached.ss_store_sk = store.s_store_sk)
-  -- join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+  store_sales
+  join store on (store_sales.ss_store_sk = store.s_store_sk)
+  -- join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
   join 
   (select
     a.ca_zip
@@ -74,3 +72,4 @@ order by
   s_store_name 
 limit 100;
 -- end query 1 in stream 0 using template query8.tpl
+exit;

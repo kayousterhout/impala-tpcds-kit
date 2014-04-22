@@ -6,12 +6,12 @@ select
   i_manufact,
   sum(ss_ext_sales_price) ext_price
 from
-  date_dim,
+  et_date_dim,
   store_sales,
-  item,
-  customer,
-  customer_address,
-  store
+  et_item,
+  et_customer,
+  et_customer_address,
+  et_store
 where
   d_date_sk = ss_sold_date_sk
   and ss_item_sk = i_item_sk

@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query59.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   s_store_name1,
   s_store_id1,
@@ -37,8 +35,8 @@ from
       sum(case when(d_day_name = 'Friday') then ss_sales_price else null end) fri_sales,
       sum(case when(d_day_name = 'Saturday') then ss_sales_price else null end) sat_sales
     from
-      store_sales_cached
-      join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+      store_sales
+      join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
     where 
       -- ss_date between '1998-10-01' and '1999-09-30'
       ss_sold_date_sk between 2451088 and 2451452
@@ -75,8 +73,8 @@ from
       sum(case when(d_day_name = 'Friday') then ss_sales_price else null end) fri_sales,
       sum(case when(d_day_name = 'Saturday') then ss_sales_price else null end) sat_sales
     from
-      store_sales_cached
-      join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+      store_sales
+      join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
     where 
       -- ss_date between '1999-10-01' and '2000-09-30'
       ss_sold_date_sk between 2451088 and 2451452
@@ -98,3 +96,4 @@ order by
   d_week_seq1
 limit 100;
 -- end query 1 in stream 0 using template query59.tpl
+exit;

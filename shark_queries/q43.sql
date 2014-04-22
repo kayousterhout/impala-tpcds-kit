@@ -1,7 +1,5 @@
+set mapred.reduce.tasks=80;
 -- start query 1 in stream 0 using template query43.tpl
-use tpcds_15tb_rcfile;
-set mapred.fairscheduler.pool=default9;
-set mapred.reduce.tasks=300;
 select
   s_store_name,
   s_store_id,
@@ -13,9 +11,9 @@ select
   sum(case when (d_day_name = 'Friday') then ss_sales_price else null end) fri_sales,
   sum(case when (d_day_name = 'Saturday') then ss_sales_price else null end) sat_sales
 from
-  store_sales_cached
-  join store on (store_sales_cached.ss_store_sk = store.s_store_sk)
-  join date_dim on (store_sales_cached.ss_sold_date_sk = date_dim.d_date_sk)
+  store_sales
+  join store on (store_sales.ss_store_sk = store.s_store_sk)
+  join date_dim on (store_sales.ss_sold_date_sk = date_dim.d_date_sk)
 where
   s_gmt_offset = -5
   and d_year = 1998
@@ -36,3 +34,4 @@ order by
   sat_sales 
 limit 100;
 -- end query 1 in stream 0 using template query43.tpl
+exit;
