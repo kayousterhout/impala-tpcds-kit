@@ -1,5 +1,8 @@
 #!/bin/bash
-source tpcds-env.sh
+
+source /root/impala-tpcds-kit/tpcds-env.sh
+
+echo "Creating output in $FLATFILE_HDFS_ROOT"
 
 pushd /root
 
