@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query53.tpl
-select
+select -- q53
   *
 from
   (select

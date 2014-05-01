@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query59.tpl
-with
+with -- q59
   wss as
   (select
     d_week_seq,

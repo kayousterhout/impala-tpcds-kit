@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query98.tpl
-select
+select -- q98
   i_item_desc,
   i_category,
   i_class,

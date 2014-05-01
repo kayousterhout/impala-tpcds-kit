@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query65.tpl
-select
+select -- q65
   s_store_name,
   i_item_desc,
   sc.revenue,

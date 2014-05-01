@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query7.tpl
-select
+select -- q7
   i_item_id,
   avg(ss_quantity) agg1,
   avg(ss_list_price) agg2,

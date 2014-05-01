@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query79.tpl
-select
+select -- q79
   c_last_name,
   c_first_name,
   substr(s_city, 1, 30),

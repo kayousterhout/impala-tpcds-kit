@@ -1,6 +1,6 @@
 -- queried modified to have contiguous date range to compare agains system with monthly partitioning
 -- start query 1 in stream 0 using template query73.tpl
-select
+select -- q73
   c_last_name,
   c_first_name,
   c_salutation,

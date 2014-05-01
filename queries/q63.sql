@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query63.tpl
-select
+select -- q63
   *
 from
   (select

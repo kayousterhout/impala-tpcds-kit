@@ -1,4 +1,4 @@
-select 
+select -- qmax 
   count(*) as total,
   count(ss_sold_date_sk) as not_null_total,
   count(distinct ss_sold_date_sk) as unique_days,

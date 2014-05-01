@@ -1,5 +1,5 @@
 -- start query 1 in stream 0 using template query89.tpl
-select
+select -- q89
   *
 from
   (select
