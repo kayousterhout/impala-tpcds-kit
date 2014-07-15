@@ -6,3 +6,4 @@ cat dn.txt | while read h
 do 
   ssh $h "cd $HOME/impala-tpcds-kit; ./gen-facts.sh" < /dev/null &
 done
+wait
